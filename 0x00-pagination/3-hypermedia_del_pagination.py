@@ -35,10 +35,12 @@ class Server:
             }
         return self.__indexed_dataset
 
-    def get_hyper_index(self, index: int = 0, page_size: int = 10) -> Dict:
+    def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict:
         """Get a page of the dataset with deletion-resilient pagination"""
         dataset = self.indexed_dataset()
 
+        if index is None:
+            index = 0
         # Check if index is valid
         if not (isinstance(index, int) and index >= 0):
             raise AssertionError("Index must be a non-negative integer")
@@ -62,4 +64,4 @@ class Server:
             "data": rows,
             "page_size": len(rows),
             "next_index": current_index if len(rows) == page_size else None
-            }
+        }
